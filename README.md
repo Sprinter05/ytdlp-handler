@@ -3,7 +3,7 @@ A frontend for yt-dlp created by [Sprinter05](https://github.com/Sprinter05) wit
 # Installation
 ## Dependencies
 ### Windows
-Download [FFMPEG](https://ffmpeg.org/download.html) and [yt-dlp](https://github.com/yt-dlp/yt-dlp/#installation) and place the .exe files to a location within your PATH.
+Download [FFMPEG](https://www.gyan.dev/ffmpeg/builds/) essentials and place the `ffmpeg`, `ffprobe` and `ffplay` binaries within your PATH. Then download the [yt-dlp](https://github.com/yt-dlp/yt-dlp/#installation) .exe file and also place it within your PATH.
 ### Linux/BSD
 #### Rolling Release Distributions
 Download both FFMPEG and yt-dlp from your package manager.
