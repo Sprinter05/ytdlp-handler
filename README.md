@@ -1,9 +1,9 @@
 # YT-DLP Handler
-A frontend for yt-dlp created by Sprinter05 with a Linux/MacOS version created by [tulip-sudo](https://github.com/tulip-sudo).
+A frontend for yt-dlp created by [Sprinter05](https://github.com/Sprinter05) with a Linux/MacOS version created by [tulip-sudo](https://github.com/tulip-sudo).
 # Installation
 ## Dependencies
 ### Windows
-Download [FFMPEG](https://ffmpeg.org/download.html) and [yt-dlp](https://github.com/yt-dlp/yt-dlp/#installation) and install them to a location within your PATH.
+Download [FFMPEG](https://ffmpeg.org/download.html) and [yt-dlp](https://github.com/yt-dlp/yt-dlp/#installation) and place the .exe files to a location within your PATH.
 ### Linux
 #### Rolling Release Distributions
 Download both FFMPEG and yt-dlp from your package manager.
@@ -21,7 +21,7 @@ For both Linux and MacOS, the executable is the .sh file.
 ## Program Settings
 `MUSICDIR` - This is where audio-only downloads are stored. Value is a path. <br>
 `VIDEODIR` - This is where video files are stored. Value is a path. <br>
-`EXPLORER` - Opens your file browser after download audio/video. Value is a number that is either 1 or 0 (1 being enabled).
+`EXPLORER` - Opens your file browser after download audio/video. Value is a number that is either 1 or 0 (1 being enabled).<br>
 ## YouTube Download
 `RATELIMIT` - Determines if a download speed limiter should be applied. Value is a number that is either 1 or 0 (1 being enabled).<br>
 `SPEED` - Affects the download speed limit if `RATELIMIT` is enabled. Value should be a number followed by a single letter to indicate the unit being used (K for Kilobytes, M for Megabytes etc.)<br>
