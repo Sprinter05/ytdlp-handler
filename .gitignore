@@ -1,0 +1,7 @@
+# Files
+*.so
+*.dll
+*.exe
+# Directories
+Videos/
+Music/
