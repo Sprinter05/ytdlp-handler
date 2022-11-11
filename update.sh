@@ -13,4 +13,3 @@ if [[ "$CSHA" != "$ONLINESHA" ]]; then
 else
 	echo "You already have the latest version."
 fi
-s
