@@ -4,6 +4,7 @@ set /p ANSWER=": "
 echo:
 if "%ANSWER%"=="y" (
     curl -L https://github.com/Sprinter05/ytdlp-handler/releases/latest/download/start.cmd -o start.cmd
+    curl -L https://github.com/Sprinter05/ytdlp-handler/releases/latest/download/update.bat -o update.bat
     echo Done!
     echo:
     echo Would you like to overwrite your settings with the default template? [y/n]
