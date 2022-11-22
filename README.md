@@ -33,6 +33,6 @@ For both Linux and MacOS, the executable is the .sh file.
 `PPARGS` - FFMPEG post-processing arguments (It is recommended to read [the FFMPEG docs](https://trac.ffmpeg.org/wiki/Encode/) before messing with this.<br>
 `DEBUG` - Enables verbose logging. Helpful if an error occurs! Value is a number that is either 1 or 0 (1 being enabled).
 ## Audio Processing
-`AUDIOQUALITY` - Affects the quality of audio downloaded. Accepts a number between 0 and 10 (inclusive). The best is 0 and the worst is 10. The default (5) is 128K.<br>
+`AUDIOQUALITY` - Affects the quality of audio downloaded. This only affects FFMPEG conversion from m4a to any other audio format and does not affect video audio. Accepts a number between 0 and 10 (inclusive). The best is 0 and the worst is 10. The default (5) is 128K.<br>
 # License
 **ytdlp-handler** is released under the _LGPLv3 license_. Please refer to the `LICENSE` file for more information 
