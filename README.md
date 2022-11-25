@@ -6,8 +6,9 @@ A frontend for yt-dlp created by [Sprinter05](https://github.com/Sprinter05) wit
 Download [Python 3.7+](https://www.python.org/downloads/) to your computer using the standalone installer.
 Download [FFMPEG](https://www.gyan.dev/ffmpeg/builds/) essentials and place the `ffmpeg`, `ffprobe` and `ffplay` binaries within your PATH. Then download the [yt-dlp](https://github.com/yt-dlp/yt-dlp/#installation) .exe file and also place it within your PATH.
 ### Linux/BSD
-#### Rolling Release Distributions
 Install Python 3.7+ from your package manager.
+
+#### Rolling Release Distributions
 Download both FFMPEG and yt-dlp from your package manager.
 #### Stable Release Distributions
 Download FFMPEG (from your package manager) and then download yt-dlp from pip using `python3 -m pip install --user -U yt-dlp` (Note: This won't be in PATH by default. Make sure to add it!) <br>
