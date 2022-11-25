@@ -2,15 +2,18 @@
 A frontend for yt-dlp created by [Sprinter05](https://github.com/Sprinter05) with a Linux/MacOS version created by [tulip-sudo](https://github.com/tulip-sudo).
 # Installation
 ## Dependencies
-### Windows
+### Windows 10
+Download [Python 3.7+](https://www.python.org/downloads/) to your computer using the standalone installer.
 Download [FFMPEG](https://www.gyan.dev/ffmpeg/builds/) essentials and place the `ffmpeg`, `ffprobe` and `ffplay` binaries within your PATH. Then download the [yt-dlp](https://github.com/yt-dlp/yt-dlp/#installation) .exe file and also place it within your PATH.
 ### Linux/BSD
 #### Rolling Release Distributions
+Install Python 3.7+ from your package manager.
 Download both FFMPEG and yt-dlp from your package manager.
 #### Stable Release Distributions
 Download FFMPEG (from your package manager) and then download yt-dlp from pip using `python3 -m pip install --user -U yt-dlp` (Note: This won't be in PATH by default. Make sure to add it!) <br>
 This is recommended as on some distributions (Like Ubuntu 22.04 LTS), the version of yt-dlp that is provided has bugs relating to downloading .mkv files.
 ### MacOS
+Install Python 3.7+ from your package manager.
 Install a package manager (e.g. [Brew](https://brew.sh)) then install FFMPEG. <br>
 Next, install yt-dlp either from pip (`python3 -m pip install --user -U yt-dlp`) or from your installed package manager.
 ## Post-Dependencies
