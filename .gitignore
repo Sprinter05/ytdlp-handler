@@ -1,8 +1,10 @@
-# Files
+# File types
 *.so
 *.dll
 *.exe
 *.sha*
+# Specific files
+update_old.bat
 # Directories
 Videos/
 Music/

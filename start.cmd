@@ -18,6 +18,10 @@ echo [0m
 
 :::Check .ini file and set properties
 for /f "delims== tokens=1,2" %%G in (settings.ini) do set %%G=%%H
+if "%LEGACY%"=="1" (
+    echo [7mLEGACY MODE IS ENABLED[0m
+    echo [0m
+)
 set RLCMD=
 if "%RATELIMIT%"=="1" (set RLCMD=--limit-rate)
 set SPDCMD=
@@ -25,9 +29,21 @@ if "%RATELIMIT%"=="1" (set SPDCMD=%SPEED%)
 set THMBCMD=
 if "%THUMBNAIL%"=="1" (set THMBCMD=--embed-thumbnail)
 set SUBTCMD=
-if "%SUBTITLES%"=="1" (set SUBTCMD=--embed-subs --sub-langs all)
+if "%SUBTITLES%"=="1" (
+    if "%LEGACY%"=="1" (
+        set SUBTCMD=--embed-subs --all-subs --sub-lang all
+    ) else (
+        set SUBTCMD=--embed-subs --sub-langs all
+    )
+)
 set MTDCMD=
-if "%METADATA%"=="1" (set MTDCMD=--embed-metadata)
+if "%METADATA%"=="1" (
+    if "%LEGACY%"=="1" (
+        set MTDCMD=--add-metadata
+    ) else (
+        set MTDCMD=--embed-metadata
+    )
+)
 set CHPTCMD=
 if "%CHAPTERS%"=="1" (set CHPTCMD=--split-chapters)
 set PPCMD=
@@ -55,44 +71,72 @@ echo [0m
 
 ::Check format, run yt-dlp and open explorer if needed
 if "%FORMAT%"=="" (
-    yt-dlp --no-playlist %RLCMD% %SPDCMD% %CHPTCMD% %MTDCMD% %THMBCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s" -o "chapter:%MUSICDIR%/%%(section_title)s - %%(title)s.%%(ext)s"
+    if "%LEGACY%"=="1" (
+        youtube-dl --no-playlist %RLCMD% %SPDCMD% %MTDCMD% %THMBCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s"
+    ) else (
+        yt-dlp --no-playlist %RLCMD% %SPDCMD% %CHPTCMD% %MTDCMD% %THMBCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s" -o "chapter:%MUSICDIR%/%%(section_title)s - %%(title)s.%%(ext)s"
+    )
     pause
     if "%EXPLORER%"=="1" (explorer "%MUSICDIR2%")
     exit /b
 )
 if %FORMAT%==1 (
-    yt-dlp --no-playlist %RLCMD% %SPDCMD% %CHPTCMD% %MTDCMD% %THMBCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s" -o "chapter:%MUSICDIR%/%%(section_title)s - %%(title)s.%%(ext)s"
+    if "%LEGACY%"=="1" (
+        youtube-dl --no-playlist %RLCMD% %SPDCMD% %MTDCMD% %THMBCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s"
+    ) else (
+        yt-dlp --no-playlist %RLCMD% %SPDCMD% %CHPTCMD% %MTDCMD% %THMBCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s" -o "chapter:%MUSICDIR%/%%(section_title)s - %%(title)s.%%(ext)s"
+    )
     pause
     if "%EXPLORER%"=="1" (explorer "%MUSICDIR2%")
     exit /b
 )
 if %FORMAT%==2 (
-    yt-dlp --no-playlist %RLCMD% %SPDCMD% %CHPTCMD% %MTDCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format wav "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s" -o "chapter:%MUSICDIR%/%%(section_title)s - %%(title)s.%%(ext)s"
+    if "%LEGACY%"=="1" (
+        youtube-dl --no-playlist %RLCMD% %SPDCMD% %MTDCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format wav "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s"
+    ) else (
+        yt-dlp --no-playlist %RLCMD% %SPDCMD% %CHPTCMD% %MTDCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format wav "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s" -o "chapter:%MUSICDIR%/%%(section_title)s - %%(title)s.%%(ext)s"
+    )
     pause
     if "%EXPLORER%"=="1" (explorer "%MUSICDIR2%")
     exit /b
 )
 if %FORMAT%==3 (
-    yt-dlp --no-playlist %RLCMD% %SPDCMD% %CHPTCMD% %MTDCMD% %THMBCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format vorbis "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s" -o "chapter:%MUSICDIR%/%%(section_title)s - %%(title)s.%%(ext)s"
+    if "%LEGACY%"=="1" (
+        youtube-dl --no-playlist %RLCMD% %SPDCMD% %MTDCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format vorbis "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s"
+    ) else (
+        yt-dlp --no-playlist %RLCMD% %SPDCMD% %CHPTCMD% %MTDCMD% %THMBCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format vorbis "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s" -o "chapter:%MUSICDIR%/%%(section_title)s - %%(title)s.%%(ext)s"
+    )
     pause
     if "%EXPLORER%"=="1" (explorer "%MUSICDIR2%")
     exit /b
 )
 if %FORMAT%==4 (
-    yt-dlp --no-playlist %RLCMD% %SPDCMD% %CHPTCMD% %MTDCMD% %THMBCMD% %SUBTCMD% --console-title -i -f "webm/bestvideo[height<=%VIDEOQUALITY%]+m4a/bestaudio" "%LINK%" %RMXCMD% "mp4" %DBGCMD% %PPCMD% %PPCMDARGS% -o "%VIDEODIR%/%%(title)s.%%(ext)s" -o "chapter:%VIDEODIR%/%%(section_title)s - %%(title)s.%%(ext)s"
+    if "%LEGACY%"=="1" (
+        youtube-dl --no-playlist %RLCMD% %SPDCMD% %MTDCMD% %SUBTCMD% --console-title -i -f "bestvideo[ext=webm][height<=?%VIDEOQUALITY%]+bestaudio[ext=m4a]" "%LINK%" --recode-video "mp4" %DBGCMD% %PPCMD% %PPCMDARGS% -o "%VIDEODIR%/%%(title)s.%%(ext)s"
+    ) else (
+        yt-dlp --no-playlist %RLCMD% %SPDCMD% %CHPTCMD% %MTDCMD% %THMBCMD% %SUBTCMD% --console-title -i -f "webm/bestvideo[height<=%VIDEOQUALITY%]+m4a/bestaudio" "%LINK%" %RMXCMD% "mp4" %DBGCMD% %PPCMD% %PPCMDARGS% -o "%VIDEODIR%/%%(title)s.%%(ext)s" -o "chapter:%VIDEODIR%/%%(section_title)s - %%(title)s.%%(ext)s"
+    )
     pause
     if "%EXPLORER%"=="1" (explorer "%VIDEODIR2%")
     exit /b
 )
 if %FORMAT%==5 (
-    yt-dlp --no-playlist %RLCMD% %SPDCMD% %CHPTCMD% %MTDCMD% %SUBTCMD% --console-title -i -f "webm/bestvideo[height<=%VIDEOQUALITY%]+m4a/bestaudio" "%LINK%" %DBGCMD% -o "%VIDEODIR%/%%(title)s.%%(ext)s" -o "chapter:%VIDEODIR%/%%(section_title)s - %%(title)s.%%(ext)s"
+    if "%LEGACY%"=="1" (
+        youtube-dl --no-playlist %RLCMD% %SPDCMD% %MTDCMD% %SUBTCMD% --console-title -i -f "bestvideo[ext=webm][height<=?%VIDEOQUALITY%]+bestaudio[ext=m4a]" "%LINK%" %DBGCMD% -o "%VIDEODIR%/%%(title)s.%%(ext)s"
+    ) else (
+        yt-dlp --no-playlist %RLCMD% %SPDCMD% %CHPTCMD% %MTDCMD% %SUBTCMD% --console-title -i -f "webm/bestvideo[height<=%VIDEOQUALITY%]+m4a/bestaudio" "%LINK%" %DBGCMD% -o "%VIDEODIR%/%%(title)s.%%(ext)s" -o "chapter:%VIDEODIR%/%%(section_title)s - %%(title)s.%%(ext)s"
+    )
     pause
     if "%EXPLORER%"=="1" (explorer "%VIDEODIR2%")
     exit /b
 )
 :::Works as a final else statement
 if not "%FORMAT%"=="" if not %FORMAT%==1 if not %FORMAT%==2 if not %FORMAT%==3 if not %FORMAT%==4 if not %FORMAT%==5 (
-    yt-dlp --no-playlist %RLCMD% %SPDCMD% %CHPTCMD% %MTDCMD% %THMBCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s" -o "chapter:%MUSICDIR%/%%(section_title)s - %%(title)s.%%(ext)s"
+    if "%LEGACY%"=="1" (
+        youtube-dl --no-playlist %RLCMD% %SPDCMD% %MTDCMD% %THMBCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s"
+    ) else (
+        yt-dlp --no-playlist %RLCMD% %SPDCMD% %CHPTCMD% %MTDCMD% %THMBCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s" -o "chapter:%MUSICDIR%/%%(section_title)s - %%(title)s.%%(ext)s"
+    )
     pause
     if "%EXPLORER%"=="1" (explorer "%MUSICDIR2%")
     exit /b

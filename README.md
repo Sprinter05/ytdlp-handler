@@ -1,5 +1,5 @@
 # YT-DLP Handler
-A frontend for yt-dlp created by [Sprinter05](https://github.com/Sprinter05) with a Linux/MacOS version created by [tulip-sudo](https://github.com/tulip-sudo).
+A frontend for [yt-dlp](https://github.com/yt-dlp/yt-dlp) created by [Sprinter05](https://github.com/Sprinter05) with a Linux/MacOS version created by [tulip-sudo](https://github.com/tulip-sudo).
 # Installation
 ## Dependencies
 ### Windows 10
@@ -23,6 +23,7 @@ For Windows, the executable is the .cmd file. <br>
 For both Linux and MacOS, the executable is the .sh file.
 # Settings
 ## Program Settings
+`LEGACY` - Enables Legacy mode which uses [youtube-dl](https://github.com/ytdl-org/youtube-dl/) instead of the default [yt-dlp](https://github.com/yt-dlp/yt-dlp) binaries. Some settings might not work in Legacy mode (check .ini file for more information)
 `MUSICDIR` - This is where audio-only downloads are stored. Value is a path. <br>
 `VIDEODIR` - This is where video files are stored. Value is a path. <br>
 `EXPLORER` - Opens your file browser after download audio/video. Value is a number that is either 1 or 0 (1 being enabled).<br>
@@ -30,7 +31,8 @@ For both Linux and MacOS, the executable is the .sh file.
 `RATELIMIT` - Determines if a download speed limiter should be applied. Value is a number that is either 1 or 0 (1 being enabled).<br>
 `SPEED` - Affects the download speed limit if `RATELIMIT` is enabled. Value should be a number followed by a single letter to indicate the unit being used (K for Kilobytes, M for Megabytes etc.)<br>
 `VIDEOQUALITY` - Determines which resolution should be downloaded for videos with the value specifically being the video height. Value is a positive whole number.<br>
-`THUMBNAIL`, `SUBTITLES`, `METADATA`, `CHAPTERS` - Enables downloading the specific feature. Value is a number that is either 1 or 0 (1 being enabled).
+`THUMBNAIL`, `SUBTITLES`, `METADATA` - Enables downloading the specific feature. Value is a number that is either 1 or 0 (1 being enabled).
+`CHAPTERS` - Divides the download into multiple files depending on the amount of chapters (if available).
 ## Video Processing
 `REMUX` - Determines if a downloaded MP4 should be remuxed instead of being entirely re-encoded. Value is a number that is either 1 or 0 (1 being enabled). <br>
 `POSTPROCESSING` - Enables post-processing for MP4 files. Affected by `PPARGS`. Value is a number that is either 1 or 0 (1 being enabled). It is recommended to read [the yt-dlp README](https://github.com/yt-dlp/yt-dlp#post-processing-options) before modifying this and PPARGS. <br>
