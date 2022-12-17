@@ -2,12 +2,11 @@
 A frontend for [yt-dlp](https://github.com/yt-dlp/yt-dlp) created by [Sprinter05](https://github.com/Sprinter05) with a Linux/MacOS version created by [tulip-sudo](https://github.com/tulip-sudo).
 # Installation
 ## Dependencies
-### Windows 10
-Download [Python 3.7+](https://www.python.org/downloads/) to your computer using the standalone installer.
-Download [FFMPEG](https://www.gyan.dev/ffmpeg/builds/) essentials and place the `ffmpeg`, `ffprobe` and `ffplay` binaries within your PATH. Then download the [yt-dlp](https://github.com/yt-dlp/yt-dlp/#installation) .exe file and also place it within your PATH.
+### Windows 10/11
+Download [Python 3.7+](https://www.python.org/downloads/) (Unless you want to use `LEGACY` mode) to your computer using the standalone installer.
+Download [FFMPEG](https://www.gyan.dev/ffmpeg/builds/) essentials and place the `ffmpeg`, `ffprobe` and `ffplay` binaries within your PATH. Then download the [yt-dlp](https://github.com/yt-dlp/yt-dlp/#installation) .exe file and also place it within your PATH (Unless you want to use `LEGACY` mode, in which case you will need the [youtube-dl](https://github.com/ytdl-org/youtube-dl/) binaries).
 ### Linux/BSD
 Install Python 3.7+ from your package manager.
-
 #### Rolling Release Distributions
 Download both FFMPEG and yt-dlp from your package manager.
 #### Stable Release Distributions
@@ -18,9 +17,10 @@ Install Python 3.7+ from your package manager.
 Install a package manager (e.g. [Brew](https://brew.sh)) then install FFMPEG. <br>
 Next, install yt-dlp either from pip (`python3 -m pip install --user -U yt-dlp`) or from your installed package manager.
 ## Post-Dependencies
-After installing the necessary dependencies, execute the file specific to your OS. <br>
-For Windows, the executable is the .cmd file. <br>
-For both Linux and MacOS, the executable is the .sh file.
+After installing the necessary dependencies, execute the file specific to your OS after downloading it from the **Releases** page. <br>
+For Windows 10/11, the executable is the start.cmd file. <br>
+For older versions of Windows, the executable is the start_win.cmd file. <br>
+For both Linux and MacOS, the executable is the start.sh file.
 # Settings
 ## Program Settings
 `LEGACY` - Enables Legacy mode which uses [youtube-dl](https://github.com/ytdl-org/youtube-dl/) instead of the default [yt-dlp](https://github.com/yt-dlp/yt-dlp) binaries. Some settings might not work in Legacy mode (check .ini file for more information)

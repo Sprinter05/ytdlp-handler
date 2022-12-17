@@ -12,6 +12,9 @@ powershell -command "Expand-Archive -Force '.\test.zip' '.\temp\'"
 if exist start.cmd (
     del ".\start.cmd"
 )
+if exist start_win.cmd (
+    del ".\start_win.cmd"
+)
 if exist update_new.bat (
     del ".\update_new.bat"
 )
@@ -21,6 +24,7 @@ if exist changelog.txt (
 ren ".\temp\update.bat" "update_new.bat"
 move ".\temp\update_new.bat" ".\"
 move ".\temp\start.cmd" ".\"
+move ".\temp\start_win.cmd" ".\"
 move ".\temp\changelog.txt" ".\"
 if %RESETSET%==1 (
     if exist settings.ini (

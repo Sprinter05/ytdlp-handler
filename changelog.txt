@@ -1,0 +1,12 @@
+Changelog for ytdlp-handler
+---------------------------
+
+2.0 (2022-12-17)
+    * Implemented required binaries checker [2a9c4e9]
+    * Legacy Mode for W10 implemented [010dc61]
+
+1.0 (2022-11-11)
+    * introduced update.bat [bd2c10b]
+    * README implemented [f3da6ad]
+    * first release implemented for Linux and MacOS [f2aaa6c]
+    * first release implemented for W10 [59450c6]
