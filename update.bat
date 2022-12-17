@@ -8,7 +8,8 @@ set RESETSET=1
     set RESETSET=0
 )
 echo:
-powershell -command "Expand-Archive -Force '.\test.zip' '.\temp\'"
+curl -L https://github.com/Sprinter05/ytdlp-handler/releases/latest/download/ytdlp-handler_win_x86.zip -o ytdlp-handler_win_x86.zip
+powershell -command "Expand-Archive -Force '.\ytdlp-handler_win_x86.zip' '.\temp\'"
 if exist start.cmd (
     del ".\start.cmd"
 )
@@ -33,6 +34,7 @@ if %RESETSET%==1 (
     move ".\temp\settings.ini" ".\"
 )
 RMDIR /s /q ".\temp"
+del ".\ytdlp-handler_win_x86.zip"
 pause
 exit \b
 :::Code by Sprinter05
