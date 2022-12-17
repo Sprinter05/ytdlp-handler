@@ -17,6 +17,11 @@ echo Using: [4mhttps://github.com/yt-dlp/yt-dlp[0m and [4mhttps://github.com/
 echo [0m
 
 :::Check .ini file and set properties
+if not exist settings.ini (
+    echo Configuration file settings.ini not found!
+    pause
+    exit /b
+)
 for /f "delims== tokens=1,2" %%G in (settings.ini) do set %%G=%%H
 if "%LEGACY%"=="1" (
     echo [7mLEGACY MODE IS ENABLED[0m
@@ -60,6 +65,31 @@ set MUSICDIR2=%MUSICDIR%
 set MUSICDIR2=%MUSICDIR2:/=\%
 set VIDEODIR2=%VIDEODIR%
 set VIDEODIR2=%VIDEODIR2:/=\%
+
+:::Check if binaries are present
+if "%LEGACY%"=="1" (
+    if not exist youtube-dl.exe (
+        echo The youtube-dl.exe binary was not found!
+        pause
+        exit /b
+    )
+) else (
+    if not exist yt-dlp.exe (
+        echo The yt-dlp.exe binary was not found!
+        pause
+        exit /b
+    )
+)
+if not exist ffmpeg.exe (
+    echo The ffmpeg.exe binary was not found!
+        pause
+        exit /b
+)
+if not exist ffprobe.exe (
+    echo The ffprobe.exe binary was not found!
+        pause
+        exit /b
+)
 
 :::User inputs Link and Media format
 echo [1;4m# Enter Youtube Link:[0m
