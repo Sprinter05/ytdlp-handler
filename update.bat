@@ -17,7 +17,7 @@ if exist start_win.cmd (
     del ".\start_win.cmd"
 )
 if exist update_new.bat (
-    del ".\update_new.bat"
+    echo Rename this file to update.bat!
 )
 if exist changelog.txt (
     del ".\changelog.txt"
