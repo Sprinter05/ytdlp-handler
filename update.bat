@@ -35,6 +35,9 @@ if %RESETSET%==1 (
 )
 RMDIR /s /q ".\temp"
 del ".\ytdlp-handler_win_x86.zip"
+echo:
+echo Rename your update_new.bat file to update.bat!
 pause
+del ".\update.bat"
 exit \b
 :::Code by Sprinter05
