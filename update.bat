@@ -18,6 +18,8 @@ if exist start_win.cmd (
 )
 if exist update_new.bat (
     echo Rename this file to update.bat!
+    pause
+    exit /b
 )
 if exist changelog.txt (
     del ".\changelog.txt"
