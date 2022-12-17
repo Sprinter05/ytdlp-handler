@@ -1,5 +1,11 @@
 @echo off
 
+if exist update_new.bat (
+    echo Rename this file to update.bat!
+    pause
+    exit /b
+)
+
 echo Would you like to reset your current settings to their default values? [y/n]
 set /p DFSET="> "
 if "%DFSET%"=="y" (
@@ -15,11 +21,6 @@ if exist start.cmd (
 )
 if exist start_win.cmd (
     del ".\start_win.cmd"
-)
-if exist update_new.bat (
-    echo Rename this file to update.bat!
-    pause
-    exit /b
 )
 if exist changelog.txt (
     del ".\changelog.txt"
