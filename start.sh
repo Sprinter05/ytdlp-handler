@@ -6,11 +6,13 @@ echo -e "\e[1;31m    \   /    | |    |______| | |  | | |    |  ___/    |  __  | 
 echo -e "\e[1;31m     | |     | |             | |__| | |____| |        | |  | |/ ____ \| |\  | |__| | |____| |____| | \ \  \e[0m"
 echo -e "\e[1;31m     |_|     |_|             |_____/|______|_|        |_|  |_/_/    \_\_| \_|_____/|______|______|_|  \_\ \e[0m"
 echo -e "\e[1;31m                                                                                                          \e[0m"
+echo -e "\e[7mSH file by Tulip\e[0m"
 echo -e "Using: \e[4mhttps://github.com/yt-dlp/yt-dlp\e[0m and \e[4mhttps://github.com/FFmpeg/FFmpeg\e[0m"
 echo -e "\e[0m"
 
 # Get values from settings..
 ## PROGRAM SETTINGS
+eval $(grep LEGACY settings.ini)
 eval $(grep VIDEODIR settings.ini)
 eval $(grep MUSICDIR settings.ini)
 eval $(grep EXPLORER settings.ini)
@@ -33,6 +35,19 @@ eval $(grep DEBUG settings.ini)
 ## AUDIO PROCESSING
 eval $(grep AUDIOQUALITY settings.ini)
 
+# Check if settings.ini exists
+if ! [ -f "settings.ini" ]; then
+	echo -e "Configuration file settings.ini not found!"
+	pause
+	exit
+fi
+
+#Check if LEGACY is enabled
+if [ $LEGACY == 1 ]; then
+	echo -e "\e[7mLEGACY MODE IS ENABLED\e[0m"
+	echo -e "\e[0m"
+fi
+
 # Setup CMDs
 RLCMD=""
 SPDCMD=""
@@ -46,12 +61,20 @@ if [ $THUMBNAIL == 1 ]; then
 	THMBCMD="--embed-thumbnail" # Thumbnails lets GOOOOOOO
 fi
 SUBTCMD=""
-if [ $SUBTITLES == 1 ]; then
-	SUBTCMD="--embed-subs" # Subtitles
+if [ $SUBTITLES == 1 ]; then # Subtitles
+	if [ $LEGACY == 1 ]; then
+		SUBTCMD="--embed-subs --all-subs --sub-lang all"
+	else
+		SUBTCMD="--embed-subs"
+	fi
 fi
 MTDCMD=""
-if [ $METADATA == 1 ]; then
-	MTDCMD="--embed-metadata" # This goofs up on .ogg. I do love me 8 digit year
+if [ $METADATA == 1 ]; then  # This goofs up on .ogg. I do love me 8 digit year
+	if [ $LEGACY == 1 ]; then
+		MTDCMD="--add-metadata"
+	else
+		MTDCMD="--embed-metadata"
+	fi
 fi
 CHPTCMD=""
 if [ $CHAPTERS == 1 ]; then
@@ -77,6 +100,23 @@ else
 	RMXCMD="--recode-video" # Not speedy
 fi
 
+# Check if dependencies are installed
+if [ $LEGACY == 1 ]: then
+	echo -n "Checking dependencies... "
+	for name in youtube-dl ffmpeg
+	do
+  	[[ $(which $name 2>/dev/null) ]] || { echo -en "\n$name needs to be installed. Use 'sudo apt-get install $name'";deps=1; }
+	done
+	[[ $deps -ne 1 ]] && echo "OK" || { echo -en "\nInstall the above and rerun this script\n";exit 1; }
+else
+	echo -n "Checking dependencies... "
+	for name in yt-dlp ffmpeg
+	do
+  	[[ $(which $name 2>/dev/null) ]] || { echo -en "\n$name needs to be installed. Use 'sudo apt-get install $name'";deps=1; }
+	done
+	[[ $deps -ne 1 ]] && echo "OK" || { echo -en "\nInstall the above and rerun this script\n";exit 1; }
+fi
+
 # Get the link and format
 echo -e "\e[1;4m# Enter Youtube Link:\e[0m"
 read -p "Link: " LINK
@@ -92,22 +132,50 @@ EXPLORERDIR=$MUSICDIR
 
 # Ugly if elif else block
 if [ "$FORMAT" == "" ]; then
-	yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s" -o "chapter:$MUSICDIR/%(section_title)s - %(title)s.%(ext)s"
+	if [ $LEGACY == 1 ]; then
+		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s"
+	else
+		yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s" -o "chapter:$MUSICDIR/%(section_title)s - %(title)s.%(ext)s"
+	fi
 elif [ $FORMAT -eq 1 ]; then
-	yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s" -o "chapter:$MUSICDIR/%(section_title)s - %(title)s.%(ext)s"
+	if [ $LEGACY == 1 ]; then
+		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s"
+	else
+		yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s" -o "chapter:$MUSICDIR/%(section_title)s - %(title)s.%(ext)s"
+	fi
 elif [ $FORMAT -eq 2 ]; then
-	yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD --console-title -i -f "m4a/bestaudio" -x --audio-format wav "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s" -o "chapter:$MUSICDIR/%(section_title)s - %(title)s.%(ext)s"
+	if [ $LEGACY == 1 ]; then
+		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD --console-title -i -f "m4a/bestaudio" -x --audio-format wav "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s"
+	else
+		yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD --console-title -i -f "m4a/bestaudio" -x --audio-format wav "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s" -o "chapter:$MUSICDIR/%(section_title)s - %(title)s.%(ext)s"
+	fi
 elif [ $FORMAT -eq 3 ]; then
-	 yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format vorbis "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s" -o "chapter:$MUSICDIR/%(section_title)s - %(title)s.%(ext)s"
+	if [ $LEGACY == 1 ]; then
+		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD --console-title -i -f "m4a/bestaudio" -x --audio-format vorbis "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s"
+	else
+		yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format vorbis "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s" -o "chapter:$MUSICDIR/%(section_title)s - %(title)s.%(ext)s"
+	fi
 elif [ $FORMAT -eq 4 ]; then
-	 yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD $SUBTCMD --console-title -i -f "webm/bestvideo[height<=$VIDEOQUALITY]+m4a/bestaudio" "$LINK" $RMXCMD "mp4" $DBGCMD $PPCMD $PPCMDARGS -o "$VIDEODIR/%(title)s.%(ext)s" -o "chapter:$VIDEODIR/%(section_title)s - %(title)s.%(ext)s"
-	 EXPLORERDIR=$VIDEODIR
-elif [ $FORMAT -eq 5 ]; then
-	# Rip anyone who uses a 6 month old version of yt-dlp
-	yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $SUBTCMD --console-title -i -f "webm/bestvideo[height<=$VIDEOQUALITY]+m4a/bestaudio" "$LINK" $DBGCMD -o "$VIDEODIR/%(title)s.%(ext)s" -o "chapter:$VIDEODIR/%(section_title)s - %(title)s.%(ext)s"
-	 EXPLORERDIR=$VIDEODIR
+	if [ $LEGACY == 1 ]; then
+		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD $SUBTCMD --console-title -i -f "webm/bestvideo[height<=$VIDEOQUALITY]+m4a/bestaudio" "$LINK" $RMXCMD "mp4" $DBGCMD $PPCMD $PPCMDARGS -o "$VIDEODIR/%(title)s.%(ext)s"
+	else
+		yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD $SUBTCMD --console-title -i -f "webm/bestvideo[height<=$VIDEOQUALITY]+m4a/bestaudio" "$LINK" $RMXCMD "mp4" $DBGCMD $PPCMD $PPCMDARGS -o "$VIDEODIR/%(title)s.%(ext)s" -o "chapter:$VIDEODIR/%(section_title)s - %(title)s.%(ext)s"
+	fi
+	EXPLORERDIR=$VIDEODIR
+elif [ $FORMAT -eq 5 ]; then	
+	if [ $LEGACY == 1 ]; then
+		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD $SUBTCMD --console-title -i -f "webm/bestvideo[height<=$VIDEOQUALITY]+m4a/bestaudio" "$LINK" $DBGCMD -o "$VIDEODIR/%(title)s.%(ext)s"
+	else
+		# Rip anyone who uses a 6 month old version of yt-dlp
+		yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $SUBTCMD --console-title -i -f "webm/bestvideo[height<=$VIDEOQUALITY]+m4a/bestaudio" "$LINK" $DBGCMD -o "$VIDEODIR/%(title)s.%(ext)s" -o "chapter:$VIDEODIR/%(section_title)s - %(title)s.%(ext)s"
+	fi
+	EXPLORERDIR=$VIDEODIR
 else
-	yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s" -o "chapter:$MUSICDIR/%(section_title)s - %(title)s.%(ext)s"
+	if [ $LEGACY == 1 ]; then
+		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s"
+	else
+		yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s" -o "chapter:$MUSICDIR/%(section_title)s - %(title)s.%(ext)s"
+	fi
 fi
 
 if [ $EXPLORER -eq 1 ]; then
