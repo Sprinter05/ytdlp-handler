@@ -3,8 +3,7 @@ A frontend for [yt-dlp](https://github.com/yt-dlp/yt-dlp) created by [Sprinter05
 # Installation
 ## Dependencies
 ### Windows 10/11
-Download [Python 3.7+](https://www.python.org/downloads/) (Unless you want to use `LEGACY` mode) to your computer using the standalone installer.
-Download [FFMPEG](https://www.gyan.dev/ffmpeg/builds/) essentials and place the `ffmpeg`, `ffprobe` and `ffplay` binaries within your PATH. Then download the [yt-dlp](https://github.com/yt-dlp/yt-dlp/#installation) .exe file and also place it within your PATH (Unless you want to use `LEGACY` mode, in which case you will need the [youtube-dl](https://github.com/ytdl-org/youtube-dl/) binaries).
+Download [FFMPEG](https://www.gyan.dev/ffmpeg/builds/) essentials and place the `ffmpeg` and `ffprobe` binaries (located inside the bin folder) within your PATH. Then download the [yt-dlp](https://github.com/yt-dlp/yt-dlp/#installation) .exe file (If you get any problems, it is recommended to try the x86 binary, but remember to rename it when using it) and also place it within your PATH (Unless you want to use `LEGACY` mode, in which case you will need the [youtube-dl](https://github.com/ytdl-org/youtube-dl/) binaries).
 ### Linux/BSD
 Install Python 3.7+ from your package manager.
 #### Rolling Release Distributions
@@ -23,7 +22,7 @@ For older versions of Windows, the executable is the start_win.cmd file. <br>
 For both Linux and MacOS, the executable is the start.sh file.
 # Settings
 ## Program Settings
-`LEGACY` - Enables Legacy mode which uses [youtube-dl](https://github.com/ytdl-org/youtube-dl/) instead of the default [yt-dlp](https://github.com/yt-dlp/yt-dlp) binaries. Some settings might not work in Legacy mode (check .ini file for more information)
+`LEGACY` - Enables Legacy mode which uses [youtube-dl](https://github.com/ytdl-org/youtube-dl/) instead of the default [yt-dlp](https://github.com/yt-dlp/yt-dlp) binaries. Some settings might not work in Legacy mode (check .ini file for more information).
 `MUSICDIR` - This is where audio-only downloads are stored. Value is a path. <br>
 `VIDEODIR` - This is where video files are stored. Value is a path. <br>
 `EXPLORER` - Opens your file browser after download audio/video. Value is a number that is either 1 or 0 (1 being enabled).<br>
