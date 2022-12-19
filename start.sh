@@ -101,7 +101,7 @@ else
 fi
 
 # Check if dependencies are installed
-if [ $LEGACY == 1 ]: then
+if [ $LEGACY == 1 ]; then
 	echo -n "Checking dependencies... "
 	for name in youtube-dl ffmpeg
 	do
