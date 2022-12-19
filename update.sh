@@ -15,7 +15,7 @@ echo ""
 
 curl -L https://github.com/Sprinter05/ytdlp-handler/releases/latest/download/ytdlp-handler_linux.zip -o ytdlp-handler_linux.zip
 mkdir temp
-unzip ytdlp-handler_linux.zip ./temp/
+unzip ytdlp-handler_linux.zip -d ./temp/
 if [ -f "start.sh" ]; then
 	rm "./start.sh"
 fi
@@ -23,9 +23,7 @@ if [ -f "changelog.txt" ]; then
 	rm "./changelog.txt"
 fi
 mv "./temp/update.sh" "update_new.sh"
-mv "./temp/update_new.sh" "./"
 mv "./temp/start.sh" "./"
-mv "./temp/start_win.sh" "./"
 mv "./temp/changelog.txt" "./"
 if [ $RESETSET == 1 ]; then
 	if [ -f settings.ini ]; then
