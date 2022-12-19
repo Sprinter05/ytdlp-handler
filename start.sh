@@ -157,14 +157,14 @@ elif [ $FORMAT -eq 3 ]; then
 	fi
 elif [ $FORMAT -eq 4 ]; then
 	if [ $LEGACY == 1 ]; then
-		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD $SUBTCMD --console-title -i -f "webm/bestvideo[height<=$VIDEOQUALITY]+m4a/bestaudio" "$LINK" $RMXCMD "mp4" $DBGCMD $PPCMD $PPCMDARGS -o "$VIDEODIR/%(title)s.%(ext)s"
+		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD $SUBTCMD --console-title -i -f "bestvideo[ext=webm][height<=?%VIDEOQUALITY%]+bestaudio[ext=m4a]" "$LINK" --recode-video "mp4" $DBGCMD $PPCMD $PPCMDARGS -o "$VIDEODIR/%(title)s.%(ext)s"
 	else
 		yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD $SUBTCMD --console-title -i -f "webm/bestvideo[height<=$VIDEOQUALITY]+m4a/bestaudio" "$LINK" $RMXCMD "mp4" $DBGCMD $PPCMD $PPCMDARGS -o "$VIDEODIR/%(title)s.%(ext)s" -o "chapter:$VIDEODIR/%(section_title)s - %(title)s.%(ext)s"
 	fi
 	EXPLORERDIR=$VIDEODIR
 elif [ $FORMAT -eq 5 ]; then	
 	if [ $LEGACY == 1 ]; then
-		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD $SUBTCMD --console-title -i -f "webm/bestvideo[height<=$VIDEOQUALITY]+m4a/bestaudio" "$LINK" $DBGCMD -o "$VIDEODIR/%(title)s.%(ext)s"
+		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD $SUBTCMD --console-title -i -f "bestvideo[ext=webm][height<=?%VIDEOQUALITY%]+bestaudio[ext=m4a]" "$LINK" $DBGCMD -o "$VIDEODIR/%(title)s.%(ext)s"
 	else
 		# Rip anyone who uses a 6 month old version of yt-dlp
 		yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $SUBTCMD --console-title -i -f "webm/bestvideo[height<=$VIDEOQUALITY]+m4a/bestaudio" "$LINK" $DBGCMD -o "$VIDEODIR/%(title)s.%(ext)s" -o "chapter:$VIDEODIR/%(section_title)s - %(title)s.%(ext)s"
