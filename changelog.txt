@@ -1,7 +1,13 @@
 Changelog for ytdlp-handler
 ---------------------------
 
+2.1 (2022-12-17)
+    * Implemented 2.0 features in Linux [5be9721]
+    * Implemented new update method for Linux [6e867a2]
+    * Updated README and improved LEGACY mode [a106c2f]
+
 2.0 (2022-12-17)
+    * Implemented new Windows updater [8e6051d]
     * Implemented required binaries checker [2a9c4e9]
     * Legacy Mode for W10 implemented [010dc61]
 
