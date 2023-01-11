@@ -16,6 +16,7 @@ eval $(grep LEGACY settings.ini)
 eval $(grep VIDEODIR settings.ini)
 eval $(grep MUSICDIR settings.ini)
 eval $(grep EXPLORER settings.ini)
+eval $(grep REOPEN settings.ini)
 
 ## YOUTUBE DOWNLOAD
 eval $(grep RATELIMIT settings.ini)
@@ -186,5 +187,9 @@ if [ $EXPLORER -eq 1 ]; then
 	else
 		cd $EXPLORERDIR
 	fi
+fi
+
+if [ $REOPEN -eq 1 ]; then
+	bash start.sh
 fi
 # Initial code by Sprinter05, SH port by Tulip
