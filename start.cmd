@@ -109,6 +109,10 @@ if "%FORMAT%"=="" (
     )
     pause
     if "%EXPLORER%"=="1" (explorer "%MUSICDIR2%")
+    if "%REOPEN%"=="1" (
+        cls
+        call "start.cmd"
+    )
     exit /b
 )
 if %FORMAT%==1 (
@@ -119,6 +123,10 @@ if %FORMAT%==1 (
     )
     pause
     if "%EXPLORER%"=="1" (explorer "%MUSICDIR2%")
+    if "%REOPEN%"=="1" (
+        cls
+        call "start.cmd"
+    )
     exit /b
 )
 if %FORMAT%==2 (
@@ -129,6 +137,10 @@ if %FORMAT%==2 (
     )
     pause
     if "%EXPLORER%"=="1" (explorer "%MUSICDIR2%")
+    if "%REOPEN%"=="1" (
+        cls
+        call "start.cmd"
+    )
     exit /b
 )
 if %FORMAT%==3 (
@@ -139,6 +151,10 @@ if %FORMAT%==3 (
     )
     pause
     if "%EXPLORER%"=="1" (explorer "%MUSICDIR2%")
+    if "%REOPEN%"=="1" (
+        cls
+        call "start.cmd"
+    )
     exit /b
 )
 if %FORMAT%==4 (
@@ -149,6 +165,10 @@ if %FORMAT%==4 (
     )
     pause
     if "%EXPLORER%"=="1" (explorer "%VIDEODIR2%")
+    if "%REOPEN%"=="1" (
+        cls
+        call "start.cmd"
+    )
     exit /b
 )
 if %FORMAT%==5 (
@@ -159,6 +179,10 @@ if %FORMAT%==5 (
     )
     pause
     if "%EXPLORER%"=="1" (explorer "%VIDEODIR2%")
+    if "%REOPEN%"=="1" (
+        cls
+        call "start.cmd"
+    )
     exit /b
 )
 :::Works as a final else statement
@@ -170,5 +194,9 @@ if not "%FORMAT%"=="" if not %FORMAT%==1 if not %FORMAT%==2 if not %FORMAT%==3 i
     )
     pause
     if "%EXPLORER%"=="1" (explorer "%MUSICDIR2%")
+    if "%REOPEN%"=="1" (
+        cls
+        call "start.cmd"
+    )
     exit /b
 )
