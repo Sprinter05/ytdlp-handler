@@ -4,6 +4,7 @@ Changelog for ytdlp-handler
 2.2 (2023-01-12)
     * Implemented REOPEN parameter for Linux [3f38db7]
     * Implemented REOPEN parameter for Windows [6f2aa22]
+    
 2.1 (2022-12-17)
     * Implemented 2.0 features in Linux [5be9721]
     * Implemented new update method for Linux [6e867a2]
