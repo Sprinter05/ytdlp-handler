@@ -1,3 +1,4 @@
+#s printer skill issue
 if [ -f update_new.sh ]; then
 	echo Rename this file to update.sh!
 	read -p "Press enter to continue... "
