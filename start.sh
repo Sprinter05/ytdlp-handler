@@ -1,4 +1,4 @@
-#s printer skill issue
+# sprinter skill issue
 # do the art thing
 echo -e "\e[1;31m  __     _________            _____  _      _____      _    _          _   _ _____  _      ______ _____   \e[0m"
 echo -e "\e[1;31m  \ \   / /__   __|          |  __ \| |    |  __ \    | |  | |   /\   | \ | |  __ \| |    |  ____|  __ \  \e[0m"
