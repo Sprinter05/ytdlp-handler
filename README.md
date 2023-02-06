@@ -22,7 +22,7 @@ For older versions of Windows, the executable is the start_win.cmd file. <br>
 For both Linux and MacOS, the executable is the start.sh file.
 # Settings
 ## Program Settings
-`LEGACY` - Enables Legacy mode which uses [youtube-dl](https://github.com/ytdl-org/youtube-dl/) instead of the default [yt-dlp](https://github.com/yt-dlp/yt-dlp) binaries. Some settings might not work in Legacy mode (check .ini file for more information).
+`LEGACY` - Enables Legacy mode which uses [youtube-dl](https://github.com/ytdl-org/youtube-dl/) instead of the default [yt-dlp](https://github.com/yt-dlp/yt-dlp) binaries. Some settings might not work in Legacy mode (check .ini file for more information). <br>
 `MUSICDIR` - This is where audio-only downloads are stored. Value is a path. <br>
 `VIDEODIR` - This is where video files are stored. Value is a path. <br>
 `EXPLORER` - Opens your file browser after download audio/video. Value is a number that is either 1 or 0 (1 being enabled).<br>
@@ -31,13 +31,13 @@ For both Linux and MacOS, the executable is the start.sh file.
 `RATELIMIT` - Determines if a download speed limiter should be applied. Value is a number that is either 1 or 0 (1 being enabled).<br>
 `SPEED` - Affects the download speed limit if `RATELIMIT` is enabled. Value should be a number followed by a single letter to indicate the unit being used (K for Kilobytes, M for Megabytes etc.)<br>
 `VIDEOQUALITY` - Determines which resolution should be downloaded for videos with the value specifically being the video height. Value is a positive whole number.<br>
-`THUMBNAIL`, `SUBTITLES`, `METADATA` - Enables downloading the specific feature. Value is a number that is either 1 or 0 (1 being enabled).
-`CHAPTERS` - Divides the download into multiple files depending on the amount of chapters (if available).
+`THUMBNAIL`, `SUBTITLES`, `METADATA` - Enables downloading the specific feature. Value is a number that is either 1 or 0 (1 being enabled). <br>
+`CHAPTERS` - Divides the download into multiple files depending on the amount of chapters (if available). <br>
 ## Video Processing
 `REMUX` - Determines if a downloaded MP4 should be remuxed instead of being entirely re-encoded. Value is a number that is either 1 or 0 (1 being enabled). <br>
 `POSTPROCESSING` - Enables post-processing for MP4 files. Affected by `PPARGS`. Value is a number that is either 1 or 0 (1 being enabled). It is recommended to read [the yt-dlp README](https://github.com/yt-dlp/yt-dlp#post-processing-options) before modifying this and PPARGS. <br>
 `PPARGS` - FFMPEG post-processing arguments (It is recommended to read [the FFMPEG docs](https://trac.ffmpeg.org/wiki/Encode/) before messing with this.<br>
-`DEBUG` - Enables verbose logging. Helpful if an error occurs! Value is a number that is either 1 or 0 (1 being enabled).
+`DEBUG` - Enables verbose logging. Helpful if an error occurs! Value is a number that is either 1 or 0 (1 being enabled). <br>
 ## Audio Processing
 `AUDIOQUALITY` - Affects the quality of audio downloaded. This only affects FFMPEG conversion from m4a to any other audio format and does not affect video audio. Accepts a number between 0 and 10 (inclusive). The best is 0 and the worst is 10. The default (5) is 128K.<br>
 # License
