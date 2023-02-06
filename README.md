@@ -26,6 +26,7 @@ For both Linux and MacOS, the executable is the start.sh file.
 `MUSICDIR` - This is where audio-only downloads are stored. Value is a path. <br>
 `VIDEODIR` - This is where video files are stored. Value is a path. <br>
 `EXPLORER` - Opens your file browser after download audio/video. Value is a number that is either 1 or 0 (1 being enabled).<br>
+`REOPEN` - Launches the executable again after finishing the operation instead of closing the program (if the value is set to 1).<br>
 ## YouTube Download
 `RATELIMIT` - Determines if a download speed limiter should be applied. Value is a number that is either 1 or 0 (1 being enabled).<br>
 `SPEED` - Affects the download speed limit if `RATELIMIT` is enabled. Value should be a number followed by a single letter to indicate the unit being used (K for Kilobytes, M for Megabytes etc.)<br>
