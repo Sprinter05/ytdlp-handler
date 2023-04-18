@@ -1,7 +1,7 @@
 @echo off
 echo PLEASE READ CAREFULLY BEFORE CHOOSING
 
-::Ask user for parameters
+::Ask user for the parameters
 echo:
 echo Would you like the standalone yt-dlp binary [1] or the x86 binary [2]? (Use the x86 binary ONLY if you have issues with the standalone one) [1/2]
 set /p DFSET="> "
