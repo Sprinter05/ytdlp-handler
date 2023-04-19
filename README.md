@@ -40,7 +40,7 @@ For both Linux and MacOS, the executable is the start.sh file. <br>
 `THUMBNAIL`, `SUBTITLES`, `METADATA` - Enables downloading the specific feature. Value is a number that is either 1 or 0 (1 being enabled). <br>
 `CHAPTERS` - Divides the download into multiple files depending on the amount of chapters (if available). <br>
 ## Video Processing
-`REMUX` - Determines if a downloaded MP4 should be remuxed instead of being entirely re-encoded. Value is a number that is either 1 or 0 (1 being enabled). <br>
+`REMUX` - Determines if a downloaded MP4 should be remuxed instead of being entirely re-encoded. Disable if you want to import the MP4 to a video editing software. Value is a number that is either 1 or 0 (1 being enabled). <br>
 `POSTPROCESSING` - Enables post-processing for MP4 files. Affected by `PPARGS`. Value is a number that is either 1 or 0 (1 being enabled). It is recommended to read [the yt-dlp README](https://github.com/yt-dlp/yt-dlp#post-processing-options) before modifying this and PPARGS. <br>
 `PPARGS` - FFMPEG post-processing arguments (It is recommended to read [the FFMPEG docs](https://trac.ffmpeg.org/wiki/Encode/) before messing with this.<br>
 `DEBUG` - Enables verbose logging. Helpful if an error occurs! Value is a number that is either 1 or 0 (1 being enabled). <br>
