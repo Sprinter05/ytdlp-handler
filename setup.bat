@@ -3,20 +3,20 @@ echo PLEASE READ CAREFULLY BEFORE CHOOSING
 
 ::Ask user for the parameters
 echo:
-echo Would you like the standalone yt-dlp binary [1] or the x86 binary [2]? (Use the x86 binary ONLY if you have issues with the standalone one) [1/2]
+echo Would you like the standalone yt-dlp binary [1] or the x86 binary [2]? (Use the x86 binary ONLY if you have issues with the standalone one) [1/2] (default is 1)
 set /p DFSET="> "
-if "%DFSET%"=="1" (
-set STDBINARY=1
+if "%DFSET%"=="2" (
+set STDBINARY=0
 ) else (
-    set STDBINARY=0
+    set STDBINARY=1
 )
 echo:
-echo Are you using Windows 10/11 [1] or an older version [2]? [1/2]
+echo Are you using Windows 10/11 [1] or an older version [2]? [1/2] (default is 1)
 set /p WINV="> "
-if "%WINV%"=="1" (
-set STARTFILE=1
+if "%WINV%"=="2" (
+set STARTFILE=0
 ) else (
-    set STARTFILE=0
+    set STARTFILE=1
 )
 
 ::Download yt-dlp win binary
@@ -69,6 +69,7 @@ del ".\ytdlp-handler\ytdlp-handler_win_x86.zip"
 curl -L https://raw.githubusercontent.com/Sprinter05/ytdlp-handler/main/LICENSE -o .\ytdlp-handler\LICENSE
 
 ::Kill program
+cls
 echo:
 echo Open the start.cmd file inside the ytdlp-handler folder to run the program!
 pause
