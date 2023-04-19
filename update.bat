@@ -30,7 +30,7 @@ if "%DFSET%"=="3" (
 ::Download new yt-dlp binary through curl if needed
 if %UPDBINYT%==1 (
     echo:
-    echo Downloading yt-dlp.exe from [4mhttps://github.com/yt-dlp/yt-dlp[0m...
+    echo Downloading yt-dlp.exe from https://github.com/yt-dlp/yt-dlp...
     if exist yt-dlp.exe (
         del "yt-dlp.exe"
     )
@@ -54,7 +54,7 @@ if "%FFPEGSET%"=="y" (
 ::Redownload ffmpeg binaries through curl if needed
 if %FFBINARY%==1 (
     echo:
-    echo Downloading ffmpeg.exe and ffprobe.exe from [4mhttps://github.com/BtbN/FFmpeg-Builds/releases[0m...
+    echo Downloading ffmpeg.exe and ffprobe.exe from https://github.com/BtbN/FFmpeg-Builds/releases...
     if exist ffmpeg.exe (
         del "ffmpeg.exe"
     )
@@ -73,7 +73,7 @@ if %FFBINARY%==1 (
 if %FFBINARY%==1 (
     if not exist .\ffmpeg_licenses\ (
         echo:
-        echo Downloading ffmpeg licenses from [4mhttps://github.com/FFmpeg/FFmpeg[0m...
+        echo Downloading ffmpeg licenses from https://github.com/FFmpeg/FFmpeg...
         mkdir ".\ffmpeg_licenses"
         curl -L https://raw.githubusercontent.com/FFmpeg/FFmpeg/master/COPYING.GPLv2 -o .\ffmpeg_licenses\COPYING.GPLv2
         curl -L https://raw.githubusercontent.com/FFmpeg/FFmpeg/master/COPYING.GPLv3 -o .\ffmpeg_licenses\COPYING.GPLv3
@@ -94,7 +94,7 @@ set RESETSET=1
 
 ::Download main program files from a .zip and do all the file manipulation
 echo:
-echo Downloading main files from [4mttps://github.com/Sprinter05/ytdlp-handler/releases/latest[0m...
+echo Downloading main files from https://github.com/Sprinter05/ytdlp-handler/releases/latest...
 curl -L https://github.com/Sprinter05/ytdlp-handler/releases/latest/download/ytdlp-handler_win_x86.zip -o ytdlp-handler_win_x86.zip
 powershell -command "Expand-Archive -Force '.\ytdlp-handler_win_x86.zip' '.\temp\'"
 if exist start.cmd (

@@ -24,6 +24,7 @@ if not exist settings.ini (
     exit /b
 )
 for /f "delims== tokens=1,2" %%G in (settings.ini) do set %%G=%%H
+
 if "%LEGACY%"=="1" (
     echo LEGACY MODE IS ENABLED
     echo:
@@ -83,16 +84,49 @@ if "%LEGACY%"=="1" (
 )
 if not exist ffmpeg.exe (
     echo The ffmpeg.exe binary was not found!
-        pause
-        exit /b
+    pause
+    exit /b
 )
 if not exist ffprobe.exe (
     echo The ffprobe.exe binary was not found!
-        pause
-        exit /b
+    pause
+    exit /b
 )
 
+:::Check and compare local and online versions through changelog.txt and github API
+if "%CHECKUPD%"=="1" (
+    if exist changelog.txt (
+        goto :CheckUpdate
+    ) else (
+        echo Missing changelog.txt file! Cannot check for updates.
+        echo:
+        goto :ActualProgram
+    )
+) else (
+    goto :ActualProgram
+)
+
+:CheckUpdate
+set "currver="
+for /F "skip=3 delims=" %%i in (changelog.txt) do (
+    if not defined currver (
+        set "currver=%%i"
+    )
+)
+for /F %%i in ('powershell -command "((Invoke-WebRequest -Uri https://api.github.com/repos/Sprinter05/ytdlp-handler/releases/latest).Content | ConvertFrom-Json).tag_name"') do (
+    set "onlinever=%%i"
+)
+echo Local version is %currver:~0,3%. Online version is %onlinever%.
+if "%onlinever%"=="%currver:~0,3%" (
+    echo The ytdlp-handler program is up to date.
+) else (
+    echo There is a new ytdlp-handler update available.
+)
+echo:
+goto :ActualProgram
+
 :::User inputs Link and Media format
+:ActualProgram
 echo # Enter Youtube Link:
 set /p LINK="Link: "
 echo:
@@ -100,7 +134,7 @@ echo # Choose format [1:mp3, 2:wav, 3:ogg, 4:mp4, 5:mkv] (default is mp3):
 set /p FORMAT="Format: "
 echo:
 
-::Check format, run yt-dlp and open explorer if needed
+:::Check format, run yt-dlp and open explorer if needed
 if "%FORMAT%"=="" (
     if "%LEGACY%"=="1" (
         youtube-dl --no-playlist %RLCMD% %SPDCMD% %MTDCMD% %THMBCMD% --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "%LINK%" --audio-quality %AUDIOQUALITY% %DBGCMD% -o "%MUSICDIR%/%%(title)s.%%(ext)s"
