@@ -1,5 +1,8 @@
 @echo off
 
+::Check and save Windows version
+for /f "tokens=4-5 delims=. " %%i in ('ver') do set VERSION=%%i.%%j
+
 ::Fix name problems
 if exist update_new.bat (
     echo Update completed! Remember to run start.cmd to start the program.
@@ -62,7 +65,9 @@ if %FFBINARY%==1 (
         del "ffprobe.exe"
     )
     curl -L https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-win64-gpl.zip -o ./ffmpeg.zip
-    powershell -command "Expand-Archive -Force '.\ffmpeg.zip' '.\ffmpeg\'"
+    powershell -command "Expand-Archive -ErrorAction Stop -Force '.\ffmpeg.zip' '.\ffmpeg\'"
+    set ffmpegdlfail=0
+    if ERRORLEVEL 1 set ffmpegdlfail=1
     move ".\ffmpeg\ffmpeg-master-latest-win64-gpl\bin\ffmpeg.exe" ".\"
     move ".\ffmpeg\ffmpeg-master-latest-win64-gpl\bin\ffprobe.exe" ".\"
     RMDIR /s /q ".\ffmpeg"
@@ -108,8 +113,12 @@ if exist changelog.txt (
 )
 ren ".\temp\update.bat" "update_new.bat"
 move ".\temp\update_new.bat" ".\"
-move ".\temp\start.cmd" ".\"
-move ".\temp\start_win.cmd" ".\"
+if "%version%" == "10.0" (
+    move ".\temp\start.cmd" ".\"
+) else (
+    move ".\temp\start_win.cmd" ".\"
+    ren ".\start_win.cmd" "start.cmd"
+)
 move ".\temp\changelog.txt" ".\"
 
 ::License moment
@@ -129,8 +138,19 @@ if %RESETSET%==1 (
 )
 RMDIR /s /q ".\temp"
 del ".\ytdlp-handler_win_x86.zip"
+echo Done
 
 ::The End
+if %ffmpegdlfail%==1 (
+    goto :FFmpegDLError
+) else (
+    goto :Normal
+)
+:FFmpegDLError
+echo:
+echo The ffmpeg binaries could not be downloaded at the moment, please try again later.
+pause
+:Normal
 cls
 call "update_new.bat"
 exit \b
