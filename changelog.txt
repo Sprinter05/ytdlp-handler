@@ -1,6 +1,12 @@
 Changelog for ytdlp-handler
 ---------------------------
 
+3.0 (2023-04-19)
+    * Deprecated start_win.cmd in favor of automatic Windows version detector [319afc3]
+    * You can now check for updates when running start.cmd with the CHECKUPD parameter [2780e60]
+    * Improved update.bat that includes external libraries [77e5d9a]
+    * New setup.bat file for easier installation on Windows [8881ba4]
+
 2.2 (2023-01-12)
     * Implemented REOPEN parameter for Linux [3f38db7]
     * Implemented REOPEN parameter for Windows [6f2aa22]

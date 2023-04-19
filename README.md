@@ -3,6 +3,9 @@ A frontend for [yt-dlp](https://github.com/yt-dlp/yt-dlp) created by [Sprinter05
 # Installation
 ## Dependencies
 ### Windows 10/11
+#### Automatic Installation
+Download the setup.bat file from the [releases](https://github.com/Sprinter05/ytdlp-handler/releases/) page and run it. Open the ytdlp-handler folder and run start.cmd once the installation has completed.
+#### Manual Installation
 Download [FFMPEG](https://www.gyan.dev/ffmpeg/builds/) essentials and place the `ffmpeg` and `ffprobe` binaries (located inside the bin folder) within your PATH. Then download the [yt-dlp](https://github.com/yt-dlp/yt-dlp/#installation) .exe file (If you get any problems, it is recommended to try the x86 binary, but remember to rename it when using it) and also place it within your PATH (Unless you want to use `LEGACY` mode, in which case you will need the [youtube-dl](https://github.com/ytdl-org/youtube-dl/) binaries).
 ### Linux/BSD
 Install Python 3.7+ from your package manager.
@@ -16,10 +19,12 @@ Install Python 3.7+ from your package manager.
 Install a package manager (e.g. [Brew](https://brew.sh)) then install FFMPEG. <br>
 Next, install yt-dlp either from pip (`python3 -m pip install --user -U yt-dlp`) or from your installed package manager.
 ## Post-Dependencies
-After installing the necessary dependencies, execute the file specific to your OS after downloading it from the **Releases** page. <br>
+After installing the necessary dependencies, execute the file specific to your OS after downloading it from the [releases](https://github.com/Sprinter05/ytdlp-handler/releases/) page. <br>
+
 For Windows 10/11, the executable is the start.cmd file. <br>
 For older versions of Windows, the executable is the start_win.cmd file. <br>
-For both Linux and MacOS, the executable is the start.sh file.
+For both Linux and MacOS, the executable is the start.sh file. <br>
+**NOTE:** start_win.cmd has been deprecated since 3.0 and the installer/updater will already fit the needs of the Windows version.
 # Settings
 ## Program Settings
 `LEGACY` - Enables Legacy mode which uses [youtube-dl](https://github.com/ytdl-org/youtube-dl/) instead of the default [yt-dlp](https://github.com/yt-dlp/yt-dlp) binaries. Some settings might not work in Legacy mode (check .ini file for more information). <br>
@@ -27,6 +32,7 @@ For both Linux and MacOS, the executable is the start.sh file.
 `VIDEODIR` - This is where video files are stored. Value is a path. <br>
 `EXPLORER` - Opens your file browser after download audio/video. Value is a number that is either 1 or 0 (1 being enabled).<br>
 `REOPEN` - Launches the executable again after finishing the operation instead of closing the program (if the value is set to 1).<br>
+`CHECKUPD` - Checks for updates when the program (start.cmd) is ran. Requires a changelog.txt file in order to work.
 ## YouTube Download
 `RATELIMIT` - Determines if a download speed limiter should be applied. Value is a number that is either 1 or 0 (1 being enabled).<br>
 `SPEED` - Affects the download speed limit if `RATELIMIT` is enabled. Value should be a number followed by a single letter to indicate the unit being used (K for Kilobytes, M for Megabytes etc.)<br>

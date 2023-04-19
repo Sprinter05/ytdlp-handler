@@ -117,7 +117,7 @@ for /F %%i in ('powershell -command "((Invoke-WebRequest -Uri https://api.github
     set "onlinever=%%i"
 )
 echo Local version is %currver:~0,3%. Online version is %onlinever%.
-if "%onlinever%"=="%currver:~0,3%" (
+if "%onlinever%" leq "%currver:~0,3%" (
     echo The ytdlp-handler program is up to date.
 ) else (
     echo There is a new ytdlp-handler update available.
