@@ -1,5 +1,4 @@
 # sprinter skill issue
-
 if [ -f /etc/ytdlp-handler.d/dnu ]; then
 	echo "ytdlp-handler is being managed by your system package manager and therefore, this updater cannot be used."
 	exit 1

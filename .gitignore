@@ -9,3 +9,6 @@ update_old.bat
 Video/
 Audio/
 test/
+
+# Kate moment
+*.kate-swp

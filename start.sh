@@ -1,4 +1,10 @@
 # sprinter skill issue
+get_latest_release() {
+	RETVAL="$(curl --silent "https://api.github.com/repos/Sprinter05/ytdlp-handler/releases/latest" | # Get latest release from GitHub api
+	grep '"tag_name":' |                                                                    # Get tag line
+	sed -E 's/.*"([^"]+)".*/\1/')"                                                            # Pluck JSON value
+}
+RETVAL=""
 # do the art thing
 echo -e "\e[1;31m  __     _________            _____  _      _____      _    _          _   _ _____  _      ______ _____   \e[0m"
 echo -e "\e[1;31m  \ \   / /__   __|          |  __ \| |    |  __ \    | |  | |   /\   | \ | |  __ \| |    |  ____|  __ \  \e[0m"
@@ -18,6 +24,7 @@ eval $(grep VIDEODIR settings.ini)
 eval $(grep MUSICDIR settings.ini)
 eval $(grep EXPLORER settings.ini)
 eval $(grep REOPEN settings.ini)
+eval $(grep CHECKUPD settings.ini)
 
 ## YOUTUBE DOWNLOAD
 eval $(grep RATELIMIT settings.ini)
@@ -40,12 +47,11 @@ eval $(grep AUDIOQUALITY settings.ini)
 # Check if settings.ini exists
 if ! [ -f "settings.ini" ]; then
 	echo -e "Configuration file settings.ini not found!"
-	pause
 	exit
 fi
 
 #Check if LEGACY is enabled
-if [ $LEGACY == 1 ]; then
+if [ $LEGACY -eq 1 ]; then
 	echo -e "\e[7mLEGACY MODE IS ENABLED\e[0m"
 	echo -e "\e[0m"
 fi
@@ -53,70 +59,85 @@ fi
 # Setup CMDs
 RLCMD=""
 SPDCMD=""
-if [ $RATELIMIT == 1 ]; then
+if [ $RATELIMIT -eq 1 ]; then
 	RLCMD="--limit-rate" # Download speed limit
 	SPDCMD=$SPEED
 fi
 
 THMBCMD=""
-if [ $THUMBNAIL == 1 ]; then
+if [ $THUMBNAIL -eq 1 ]; then
 	THMBCMD="--embed-thumbnail" # Thumbnails lets GOOOOOOO
 fi
 SUBTCMD=""
-if [ $SUBTITLES == 1 ]; then # Subtitles
-	if [ $LEGACY == 1 ]; then
+if [ $SUBTITLES -eq 1 ]; then # Subtitles
+	if [ $LEGACY -eq 1 ]; then
 		SUBTCMD="--embed-subs --all-subs --sub-lang all"
 	else
 		SUBTCMD="--embed-subs"
 	fi
 fi
 MTDCMD=""
-if [ $METADATA == 1 ]; then  # This goofs up on .ogg. I do love me 8 digit year
-	if [ $LEGACY == 1 ]; then
+if [ $METADATA -eq 1 ]; then  # This goofs up on .ogg. I do love me 8 digit year
+	if [ $LEGACY -eq 1 ]; then
 		MTDCMD="--add-metadata"
 	else
 		MTDCMD="--embed-metadata"
 	fi
 fi
 CHPTCMD=""
-if [ $CHAPTERS == 1 ]; then
+if [ $CHAPTERS -eq 1 ]; then
 	CHPTCMD="--split-chapters" # Chapters. Who even wants this?
 fi
 
 PPCMD=""
 PPCMDARGS=""
-if [ $POSTPROCESSING == 1 ]; then
+if [ $POSTPROCESSING -eq 1 ]; then
 	PPCMD="--postprocessor-args" # pleasedontsayit pleasedontsayit pleasedontsayit pleasedontsayit pleasedontsayit
 	PPCMDARGS=$PPARGS
 fi
 
 DBGCMD=""
-if [ $DEBUG == 1 ]; then
+if [ $DEBUG -eq 1 ]; then
 	DBGCMD="--verbose" # Make errors be helpful
 fi
 
 RMXCMD=""
-if [ $REMUX == 1 ]; then
+if [ $REMUX -eq 1 ]; then
 	RMXCMD="--remux-video" # Speedy
 else
 	RMXCMD="--recode-video" # Not speedy
 fi
 
 # Check if dependencies are installed
-if [ $LEGACY == 1 ]; then
+if [ $LEGACY -eq 1 ]; then
 	echo -n "Checking dependencies... "
 	for name in youtube-dl ffmpeg
 	do
-  	[[ $(which $name 2>/dev/null) ]] || { echo -en "\n$name needs to be installed.";deps=1; }
+	[[ $(which $name 2>/dev/null) ]] || { echo -en "\n$name needs to be installed.";deps=1; }
 	done
-	[[ $deps -ne 1 ]] && echo "OK" || { echo -en "\nInstall the above and rerun this script\n";exit 1; }
+	[[ $deps -ne 1 ]] && echo "OK" || { echo -en "\nInstall the above and rerun this script\n"; exit 1; }
 else
 	echo -n "Checking dependencies... "
 	for name in yt-dlp ffmpeg
 	do
-  	[[ $(which $name 2>/dev/null) ]] || { echo -en "\n$name needs to be installed.";deps=1; }
+	[[ $(which $name 2>/dev/null) ]] || { echo -en "\n$name needs to be installed.";deps=1; }
 	done
-	[[ $deps -ne 1 ]] && echo "OK" || { echo -en "\nInstall the above and rerun this script\n";exit 1; }
+	[[ $deps -ne 1 ]] && echo "OK" || { echo -en "\nInstall the above and rerun this script\n"; exit 1; }
+fi
+
+echo $CHECKUPD
+# Check and compare local and online versions through changelog.txt and github API
+if [ "$CHECKUPD" == "1" ]; then
+	if [ -f "changelog.txt" ]; then
+		get_latest_release
+		VER=$(cat changelog.txt | grep -Eo '[+-]?[0-9]+([.][0-9]+)?' | head -n 1)
+		if [ "$RETVAL" == "$VER" ]; then
+			echo "YO?"
+		fi
+		exit
+	else
+		echo "Missing changelog.txt! Cannot check for updates."
+	fi
 fi
 
 # Get the link and format
@@ -134,38 +155,38 @@ EXPLORERDIR=$MUSICDIR
 
 # Ugly if elif else block
 if [ "$FORMAT" == "" ]; then
-	if [ $LEGACY == 1 ]; then
+	if [ $LEGACY -eq 1 ]; then
 		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s"
 	else
 		yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s" -o "chapter:$MUSICDIR/%(section_title)s - %(title)s.%(ext)s"
 	fi
 elif [ $FORMAT -eq 1 ]; then
-	if [ $LEGACY == 1 ]; then
+	if [ $LEGACY -eq 1 ]; then
 		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s"
 	else
 		yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s" -o "chapter:$MUSICDIR/%(section_title)s - %(title)s.%(ext)s"
 	fi
 elif [ $FORMAT -eq 2 ]; then
-	if [ $LEGACY == 1 ]; then
+	if [ $LEGACY -eq 1 ]; then
 		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD --console-title -i -f "m4a/bestaudio" -x --audio-format wav "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s"
 	else
 		yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD --console-title -i -f "m4a/bestaudio" -x --audio-format wav "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s" -o "chapter:$MUSICDIR/%(section_title)s - %(title)s.%(ext)s"
 	fi
 elif [ $FORMAT -eq 3 ]; then
-	if [ $LEGACY == 1 ]; then
+	if [ $LEGACY -eq 1 ]; then
 		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD --console-title -i -f "m4a/bestaudio" -x --audio-format vorbis "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s"
 	else
 		yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format vorbis "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s" -o "chapter:$MUSICDIR/%(section_title)s - %(title)s.%(ext)s"
 	fi
 elif [ $FORMAT -eq 4 ]; then
-	if [ $LEGACY == 1 ]; then
+	if [ $LEGACY -eq 1 ]; then
 		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD $SUBTCMD --console-title -i -f "bestvideo[ext=webm][height<=?$VIDEOQUALITY]+bestaudio[ext=m4a]" "$LINK" --recode-video "mp4" $DBGCMD $PPCMD $PPCMDARGS -o "$VIDEODIR/%(title)s.%(ext)s"
 	else
 		yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD $SUBTCMD --console-title -i -f "webm/bestvideo[height<=$VIDEOQUALITY]+m4a/bestaudio" "$LINK" $RMXCMD "mp4" $DBGCMD $PPCMD $PPCMDARGS -o "$VIDEODIR/%(title)s.%(ext)s" -o "chapter:$VIDEODIR/%(section_title)s - %(title)s.%(ext)s"
 	fi
 	EXPLORERDIR=$VIDEODIR
 elif [ $FORMAT -eq 5 ]; then	
-	if [ $LEGACY == 1 ]; then
+	if [ $LEGACY -eq 1 ]; then
 		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD $SUBTCMD --console-title -i -f "bestvideo[ext=webm][height<=?$VIDEOQUALITY]+bestaudio[ext=m4a]" "$LINK" $DBGCMD -o "$VIDEODIR/%(title)s.%(ext)s"
 	else
 		# Rip anyone who uses a 6 month old version of yt-dlp
@@ -173,7 +194,7 @@ elif [ $FORMAT -eq 5 ]; then
 	fi
 	EXPLORERDIR=$VIDEODIR
 else
-	if [ $LEGACY == 1 ]; then
+	if [ $LEGACY -eq 1 ]; then
 		youtube-dl --no-playlist $RLCMD $SPDCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s"
 	else
 		yt-dlp --no-playlist $RLCMD $SPDCMD $CHPTCMD $MTDCMD $THMBCMD --console-title -i -f "m4a/bestaudio" -x --audio-format mp3 "$LINK" --audio-quality $AUDIOQUALITY $DBGCMD -o "$MUSICDIR/%(title)s.%(ext)s" -o "chapter:$MUSICDIR/%(section_title)s - %(title)s.%(ext)s"
