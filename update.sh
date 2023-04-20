@@ -36,7 +36,7 @@ else
 	exit 65
 fi
 
-if [ -f start.sh ]; then
+if [ -f "start.sh" ]; then
 	rm "./start.sh"
 fi
 if [ -f changelog.txt ]; then
@@ -47,7 +47,7 @@ mv "./temp/start.sh" "./"
 mv "./temp/changelog.txt" "./"
 
 # License moment
-if [ -f LICENSE ]; then
+if [ -f "LICENSE" ]; then
 	rm "./LICENSE"
 fi
 
@@ -56,7 +56,7 @@ curl -L https://raw.githubusercontent.com/Sprinter05/ytdlp-handler/main/LICENSE 
 # Reset settings to default if user agreed to do so
 if [ $RESETSET == 1 ]; then
 	echo Resetting settings to default values...
-	if [ -f settings.ini ]; then
+	if [ -f "settings.ini" ]; then
 		rm "./settings.ini"
 	fi
 	mv "./temp/settings.ini" "./"
