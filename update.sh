@@ -64,4 +64,4 @@ fi
 rm -r ./temp
 
 bash "update_new.sh"
-# Code by Sprinter05
+# Initial code by Sprinter05, SH port by Tulip
