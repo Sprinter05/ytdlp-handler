@@ -2,6 +2,8 @@ Changelog for ytdlp-handler
 ---------------------------
 
 3.0 (2023-04-19)
+    * Implemented checking for updates in start.sh if enabled [637e2e0]
+    * Improved update.sh file [c08d218]
     * Deprecated start_win.cmd in favor of automatic Windows version detector [319afc3]
     * You can now check for updates when running start.cmd with the CHECKUPD parameter [2780e60]
     * Improved update.bat that includes external libraries [77e5d9a]
