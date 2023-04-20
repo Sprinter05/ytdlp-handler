@@ -14,7 +14,7 @@ if [ -f update_new.sh ]; then
 fi
 
 # Ask for default user settings reset
-echo "Would you like to reset your curmvt settings to their default values? [y/N]"
+echo "Would you like to reset your current settings to their default values? [y/N]"
 read DFSET
 if [ "$DFSET" == "y" ]; then
 	RESETSET=1
