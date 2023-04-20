@@ -131,10 +131,9 @@ if [ "$CHECKUPD" == "1" ]; then
 	if [ -f "changelog.txt" ]; then
 		get_latest_release
 		VER=$(cat changelog.txt | grep -Eo '[+-]?[0-9]+([.][0-9]+)?' | head -n 1)
-		if [ "$RETVAL" == "$VER" ]; then
-			echo "YO?"
+		if awk "BEGIN {exit !($RETVAL > $VER)}" ; then
+			echo "There is a new ytdlp-handler update available."
 		fi
-		exit
 	else
 		echo "Missing changelog.txt! Cannot check for updates."
 	fi
