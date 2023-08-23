@@ -26,13 +26,21 @@ if %STDBINARY%==1 (
 
 ::Download ffmpeg binaries
 echo:
-echo Downloading ffmpeg.exe and ffprobe.exe from [4mhttps://github.com/BtbN/FFmpeg-Builds/releases[0m...
-curl -L https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-win64-gpl.zip -o ./ytdlp-handler/ffmpeg.zip
+echo Downloading ffmpeg.exe and ffprobe.exe from [4mhttps://www.gyan.dev/ffmpeg/builds/[0m...
+curl -L https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip -o ./ytdlp-handler/ffmpeg.zip
+::curl -L https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-win64-gpl.zip -o ./ytdlp-handler/ffmpeg.zip
 powershell -command "Expand-Archive -ErrorAction Stop -Force '.\ytdlp-handler\ffmpeg.zip' '.\ytdlp-handler\ffmpeg\'"
 set ffmpegdlfail=0
 if ERRORLEVEL 1 set ffmpegdlfail=1
-move ".\ytdlp-handler\ffmpeg\ffmpeg-master-latest-win64-gpl\bin\ffmpeg.exe" ".\ytdlp-handler\"
-move ".\ytdlp-handler\ffmpeg\ffmpeg-master-latest-win64-gpl\bin\ffprobe.exe" ".\ytdlp-handler\"
+cd .\ytdlp-handler\ffmpeg
+SET a=%1
+for /D %%x in (%a%*) do if not defined f set "f=%%x"
+SET pa=%p%%f%
+ren "%pa%" "extract"
+cd ..
+cd ..
+move ".\ytdlp-handler\ffmpeg\extract\bin\ffmpeg.exe" ".\ytdlp-handler\"
+move ".\ytdlp-handler\ffmpeg\extract\bin\ffprobe.exe" ".\ytdlp-handler\"
 RMDIR /s /q ".\ytdlp-handler\ffmpeg"
 del ".\ytdlp-handler\ffmpeg.zip"
 
@@ -53,7 +61,7 @@ powershell -command "Expand-Archive -Force '.\ytdlp-handler\ytdlp-handler_win_x8
 move ".\ytdlp-handler\temp\update.bat" ".\ytdlp-handler\"
 move ".\ytdlp-handler\temp\settings.ini" ".\ytdlp-handler\"
 move ".\ytdlp-handler\temp\changelog.txt" ".\ytdlp-handler\"
-if "%version%" == "10.0" (
+if "%version%" GEQ "10.0" (
     move ".\ytdlp-handler\temp\start.cmd" ".\ytdlp-handler\"
 ) else (
     move ".\ytdlp-handler\temp\start_win.cmd" ".\ytdlp-handler\"
