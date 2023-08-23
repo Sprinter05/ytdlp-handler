@@ -1,6 +1,9 @@
 Changelog for ytdlp-handler
 ---------------------------
 
+3.1 (2023-08-23)
+    * Changed ffmpeg download methods [da8981b]
+
 3.0 (2023-04-19)
     * Implemented checking for updates in start.sh if enabled [637e2e0]
     * Improved update.sh file [c08d218]
